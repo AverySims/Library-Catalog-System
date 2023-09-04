@@ -1,12 +1,12 @@
 ﻿namespace LibraryCatalogSystem
 {
-	enum BookStatus
+	public enum BookStatus
 	{
 		Available,
 		CheckedOut
 	}
 
-	internal class Book
+	public class Book
 	{
 		// Properties
 		public ulong ISBN { get; set; }
