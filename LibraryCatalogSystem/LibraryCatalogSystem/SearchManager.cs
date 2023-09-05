@@ -18,9 +18,14 @@ public static class SearchManager
 			{
 				var book = kvp.Value;
 				Console.WriteLine("------------------------------------------------------------------------------------------");
-				Console.WriteLine($"{book.Title} by {book.Author} | Status: {book.Status}, ISBN: {kvp.Key}");
+				PrintBook(kvp.Key, book);
 			}
 		}
+	}
+
+	public static void PrintBook(ulong isbn, Book book)
+	{
+		Console.WriteLine($"{book.Title} by {book.Author} | Status: {book.Status}, ISBN: {isbn:D4}");
 	}
 	
 	public static void SearchByISBN(ulong isbn, Dictionary<ulong, Book> catalog, out Dictionary<ulong, Book> results)
@@ -49,5 +54,50 @@ public static class SearchManager
 
 		PrintBooks(results);
 	}
-	
+
+	public static void CheckOutBook(ulong isbn, ref Dictionary<ulong, Book> catalog)
+	{
+		ConsoleHelper.PrintBlank();
+		
+		if (catalog.TryGetValue(isbn, out var value))
+		{
+			if (value.Status != BookStatus.Available)
+			{
+				Console.WriteLine("That book is currently not available");
+				return;
+			}
+			
+			value.Status = BookStatus.CheckedOut;
+			Console.WriteLine("Successfully checked out book: ");
+			Console.WriteLine("------------------------------------------------------------------------------------------");
+			PrintBook(isbn, value);
+		}
+		else
+		{
+			Console.WriteLine("Couldn't find any books with that parameter.");
+		}
+	}
+
+	public static void ReturnBook(ulong isbn, ref Dictionary<ulong, Book> catalog)
+	{
+		ConsoleHelper.PrintBlank();
+		
+		if (catalog.TryGetValue(isbn, out var value))
+		{
+			if (value.Status != BookStatus.CheckedOut)
+			{
+				Console.WriteLine("That book has already been returned");
+				return;
+			}
+			
+			value.Status = BookStatus.Available;
+			Console.WriteLine("Successfully returned book: ");
+			Console.WriteLine("------------------------------------------------------------------------------------------");
+			PrintBook(isbn, value);
+		}
+		else
+		{
+			Console.WriteLine("Couldn't find any books with that parameter.");
+		}
+	}
 }

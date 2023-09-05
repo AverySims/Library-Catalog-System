@@ -5,7 +5,7 @@ namespace LibraryCatalogSystem
 {
 	internal class Program
 	{
-		public static Dictionary<ulong, Book> Catalog { get; private set; } = Book.PresetLibrary;
+		public static Dictionary<ulong, Book> Catalog = Book.PresetLibrary;
 
 		private static string[] menu1 = { "View all books", "Search by ISBN", "Search by Title", "Search by Author", "Check out a book", "Return a book" };
 		private static string[] menu2 = { "Exit program" };
@@ -82,10 +82,12 @@ namespace LibraryCatalogSystem
                     SearchManager.SearchByAuthor(GenericReadLine.TryReadLine<string>(), Catalog, out Dictionary<ulong, Book> resultsAuthor);
 					break;
 				case 5: // Check out book
-					
+					Console.Write("Enter the ISBN of the book you wish to check out: ");
+					SearchManager.CheckOutBook(GenericReadLine.TryReadLine<ulong>(), ref Catalog);
 					break;
 				case 6: // return book
-					
+					Console.Write("Enter the ISBN of the book you wish to return: ");
+					SearchManager.ReturnBook(GenericReadLine.TryReadLine<ulong>(), ref Catalog);
 					break;
 				case 7: // exit program
 					tempReturnValue = false;
