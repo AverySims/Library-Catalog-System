@@ -5,6 +5,25 @@ namespace LibraryCatalogSystem;
 
 public static class SearchManager
 {
+	public static void PrintBooks(Dictionary<ulong, Book> books)
+	{
+		ConsoleHelper.PrintBlank();
+
+		if (books.Count < 1)
+		{
+			Console.WriteLine("Couldn't find any books with that title.");
+		}
+		else
+		{
+			Console.WriteLine("Found the following book(s):");
+			foreach (var kvp in books)
+			{
+				var book = kvp.Value;
+				Console.WriteLine($"Title: {book.Title}, Author: {book.Author}, Status: {book.Status}, ISBN: {kvp.Key}");
+			}
+		}
+	}
+	
 	public static void SearchByTitle(string title, Dictionary<ulong, Book> catalog, out Dictionary<ulong, Book> results)
 	{
 		// using LINQ to filter results
@@ -25,51 +44,7 @@ public static class SearchManager
 		}
 		 */
 
-		if (results.Keys.Count < 1)
-		{
-			ConsoleHelper.PrintBlank();
-			Console.WriteLine("Couldn't find any books with that title.");
-		}
-		else
-		{
-			ConsoleHelper.PrintBlank();
-			Console.WriteLine("Found the following book(s):");
-			for (int i = 0; i < results.Values.Count; i++)
-			{
-				Console.WriteLine($"ISBN: {results.Keys.ToArray()[i]}, Title: {results.Values.ToArray()[i].Title}, Author: {results.Values.ToArray()[i].Author}, Status: {results.Values.ToArray()[i].Status}");
-			}
-		}
-		/*
-		 *
-		Console.WriteLine("Enter a title to search for:");
-		string title = Console.ReadLine();
-		Console.WriteLine($"Searching for {title}...");
-		ConsoleHelper.PrintBlank();
-		List<Book> results = new List<Book>();
-		foreach (Book book in Book.PresetLibrary.Values)
-		{
-			if (book.Title.Contains(title))
-			{
-				results.Add(book);
-			}
-		}
-		if (results.Count == 0)
-		{
-			Console.WriteLine("No results found.");
-		}
-		else
-		{
-			Console.WriteLine($"Found {results.Count} results:");
-			ConsoleHelper.PrintBlank();
-			foreach (Book book in results)
-			{
-				Console.WriteLine($"Title: {book.Title}");
-				Console.WriteLine($"Author: {book.Author}");
-				Console.WriteLine($"ISBN: {book.ISBN}");
-				Console.WriteLine($"Status: {book.Status}");
-				ConsoleHelper.PrintBlank();
-			}
-		}
-		 */
+		PrintBooks(results);
 	}
+	
 }
