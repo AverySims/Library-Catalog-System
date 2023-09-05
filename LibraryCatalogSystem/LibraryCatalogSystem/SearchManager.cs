@@ -5,6 +5,10 @@ namespace LibraryCatalogSystem;
 
 public static class SearchManager
 {
+	/// <summary>
+	/// Prints a catalog of books, listing each books internal values
+	/// </summary>
+	/// <param name="books">Dictionary of books</param>
 	public static void PrintBooks(Dictionary<ulong, Book> books)
 	{
 		if (books.Count < 1)
@@ -23,11 +27,22 @@ public static class SearchManager
 		}
 	}
 
+	/// <summary>
+	/// Prints a book's internal values
+	/// </summary>
+	/// <param name="isbn">Key/ISBN value</param>
+	/// <param name="book">Book reference</param>
 	public static void PrintBook(ulong isbn, Book book)
 	{
 		Console.WriteLine($"{book.Title} by {book.Author} | Status: {book.Status}, ISBN: {isbn:D4}");
 	}
 	
+	/// <summary>
+	/// Searches the given Dictionary of Books and returns the book that matches the given ISBN key
+	/// </summary>
+	/// <param name="isbn">The search parameter</param>
+	/// <param name="catalog">The Dictionary that will be searched</param>
+	/// <param name="results">The returned Dictionary of books that meet the search parameters</param>
 	public static void SearchByISBN(ulong isbn, Dictionary<ulong, Book> catalog, out Dictionary<ulong, Book> results)
 	{
 		// using LINQ to filter results
@@ -37,6 +52,12 @@ public static class SearchManager
 		PrintBooks(results);
 	}
 	
+	/// <summary>
+	/// Searches the given Dictionary of Books and returns the book that matches the given book title
+	/// </summary>
+	/// <param name="title">The search parameter</param>
+	/// <param name="catalog">The Dictionary that will be searched</param>
+	/// <param name="results">The returned Dictionary of books that meet the search parameters</param>
 	public static void SearchByTitle(string title, Dictionary<ulong, Book> catalog, out Dictionary<ulong, Book> results)
 	{
 		// using LINQ to filter results
@@ -46,6 +67,12 @@ public static class SearchManager
 		PrintBooks(results);
 	}
 	
+	/// <summary>
+	/// Searches the given Dictionary of Books and returns the book that matches the given book author
+	/// </summary>
+	/// <param name="author">The search parameter</param>
+	/// <param name="catalog">The Dictionary that will be searched</param>
+	/// <param name="results">The returned Dictionary of books that meet the search parameters</param>
 	public static void SearchByAuthor(string author, Dictionary<ulong, Book> catalog, out Dictionary<ulong, Book> results)
 	{
 		// using LINQ to filter results
@@ -55,6 +82,11 @@ public static class SearchManager
 		PrintBooks(results);
 	}
 
+	/// <summary>
+	/// Gets the book with the given ISBN key and marks it as "CheckedOut"
+	/// </summary>
+	/// <param name="isbn">The search parameter</param>
+	/// <param name="catalog">The Dictionary that will be searched</param>
 	public static void CheckOutBook(ulong isbn, ref Dictionary<ulong, Book> catalog)
 	{
 		ConsoleHelper.PrintBlank();
@@ -78,6 +110,11 @@ public static class SearchManager
 		}
 	}
 
+	/// <summary>
+	/// Gets the book with the given ISBN key and marks it as "Available"
+	/// </summary>
+	/// <param name="isbn">The search parameter</param>
+	/// <param name="catalog">The Dictionary that will be searched</param>
 	public static void ReturnBook(ulong isbn, ref Dictionary<ulong, Book> catalog)
 	{
 		ConsoleHelper.PrintBlank();
